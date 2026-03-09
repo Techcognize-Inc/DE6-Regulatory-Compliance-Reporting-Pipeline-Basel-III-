@@ -1,0 +1,18 @@
+# Ignore local data files (Too large for Git)
+data/*.csv
+
+# Ignore Airflow logs and internal state
+logs/
+plugins/
+airflow.db
+.env
+
+# Ignore Python cache and environment
+__pycache__/
+*.pyc
+.venv/
+.DS_Store
+
+# Ignore IDE specific files
+.vscode/
+.idea/

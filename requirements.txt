@@ -1,0 +1,17 @@
+# Data Generation
+Faker==24.4.0
+
+# Data Processing Engine
+# Pinning to 3.5.x to match your bitnamilegacy/spark:3.5.3 Docker container
+pyspark>=3.5.0,<3.6.0
+
+# Database Connectivity
+psycopg2-binary
+
+# API Requests (FDIC Data)
+requests==2.31.0
+
+# Dashboard & Visualization
+dash==2.16.1
+pandas
+plotly
