@@ -74,8 +74,9 @@ with DAG(
     # ---------------------------------------------------------
     # 4. Downstream Steps (Metrics Load & Reporting)
     # ---------------------------------------------------------
-    load_regulatory_metrics = EmptyOperator(
-        task_id='load_regulatory_metrics'
+    load_regulatory_metrics = BashOperator(
+        task_id='load_regulatory_metrics',
+        bash_command='python /opt/airflow/spark_scripts/load_metrics.py'
     )
 
     generate_report = EmptyOperator(

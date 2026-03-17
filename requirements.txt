@@ -15,3 +15,5 @@ requests==2.31.0
 dash==2.16.1
 pandas
 plotly
+pytest
+pytest-spark

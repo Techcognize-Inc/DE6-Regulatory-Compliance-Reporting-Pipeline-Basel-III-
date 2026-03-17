@@ -68,4 +68,15 @@ df_branch_npl.orderBy(col("npl_ratio_percent").desc()).show(5)
 print("--- Aggregate Bank Level NPL Ratio ---")
 df_bank_npl.select("total_loan_balance", "npl_balance", "npl_ratio_percent").show()
 
+# Create a small result DataFrame
+# We only need the final ratio for the reporting table
+result_value = df_bank_npl.select("npl_ratio_percent").first()[0]
+df_final = spark.createDataFrame([("NPL", float(result_value))], ["metric_name", "metric_value"])
+
+# Save to the shared volume
+# .coalesce(1) ensures one file, .write.mode("overwrite") prevents 'File Exists' errors
+df_final.coalesce(1).write.mode("overwrite").option("header", "true").csv(f"{DATA_DIR}/npl_result")
+
+print(f"✅ NPL Result ({result_value}%) exported to staging.")
+
 spark.stop()

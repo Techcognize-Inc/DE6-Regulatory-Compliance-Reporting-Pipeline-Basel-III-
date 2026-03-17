@@ -48,4 +48,13 @@ print(f"Total HQLA: ${total_hqla:,.2f}")
 print(f"Net 30-Day Cash Outflows: ${total_30d_outflow:,.2f}")
 print(f"Liquidity Coverage Ratio (LCR): {lcr_ratio:.2f}% (Regulatory Minimum is usually 100%)")
 
+# Create a small DataFrame for the result
+result_data = [("LCR", float(lcr_ratio))]
+df_result = spark.createDataFrame(result_data, ["metric_name", "metric_value"])
+
+# Save to a temporary CSV that the next task will read
+# We use .coalesce(1) to ensure only one file is created
+df_result.coalesce(1).write.mode("overwrite").option("header", "true").csv(f"{DATA_DIR}/lcr_result")
+print(f"✅ LCR Result saved to {DATA_DIR}/lcr_result")
+
 spark.stop()

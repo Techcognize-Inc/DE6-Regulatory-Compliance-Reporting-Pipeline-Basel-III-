@@ -54,4 +54,13 @@ print(f"Total Risk-Weighted Assets (RWA): ${total_rwa:,.2f}")
 print(f"Total Tier 1 Capital: ${tier1_capital:,.2f}")
 print(f"Capital Adequacy Ratio (CAR): {car_ratio:.2f}%")
 
+# Create a small DataFrame for the result
+result_data = [("CAR", float(car_ratio))]
+df_result = spark.createDataFrame(result_data, ["metric_name", "metric_value"])
+
+# Save to a temporary CSV that the next task will read
+# We use .coalesce(1) to ensure only one file is created
+df_result.coalesce(1).write.mode("overwrite").option("header", "true").csv(f"{DATA_DIR}/car_result")
+print(f"✅ CAR Result saved to {DATA_DIR}/car_result")
+
 spark.stop()

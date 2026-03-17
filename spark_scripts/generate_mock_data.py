@@ -6,7 +6,9 @@ import os
 
 # Initialize Faker and establish our data directory
 fake = Faker()
-DATA_DIR = './data'
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+
 os.makedirs(DATA_DIR, exist_ok=True)
 
 # ---------------------------------------------------------
