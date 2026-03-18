@@ -53,12 +53,7 @@ pipeline {
             steps {
                 echo '========== Publishing test results =========='
                 junit 'test-results.xml'
-                publishHTML([
-                    reportDir: '.',
-                    reportFiles: 'pylint-report.txt',
-                    reportName: 'Pylint Report',
-                    keepAll: true
-                ])
+                
             }
         }
         
