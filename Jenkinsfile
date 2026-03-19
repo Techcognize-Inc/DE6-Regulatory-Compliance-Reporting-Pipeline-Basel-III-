@@ -19,9 +19,9 @@ pipeline {
             steps {
                 echo '========== Setting up Python environment =========='
                 sh '''
-                    python --version
-                    python -m venv venv
-                    . venv/bin/activate || venv\\Scripts\\activate.bat
+                    python3 --version
+                    python3 -m venv venv
+                    . venv/bin/activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
                 '''
@@ -32,7 +32,7 @@ pipeline {
             steps {
                 echo '========== Running code quality checks =========='
                 sh '''
-                    . venv/bin/activate || venv\\Scripts\\activate.bat
+                    . venv/bin/activate
                     pylint spark_scripts/ --exit-zero --output-format=parseable > pylint-report.txt || true
                     flake8 spark_scripts/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
                 '''
@@ -43,8 +43,8 @@ pipeline {
             steps {
                 echo '========== Running unit tests =========='
                 sh '''
-                    . venv/bin/activate || venv\\Scripts\\activate.bat
-                    python -m pytest Tests/ -v --tb=short --junit-xml=test-results.xml
+                    . venv/bin/activate
+                    python3 -m pytest Tests/ -v --tb=short --junit-xml=test-results.xml
                 '''
             }
         }
